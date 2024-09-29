@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cattle info</title>
+</head>
+<body>
+    <form id="cattleInfo" action="/cattleInfo" method="post">
+        <input type="text" name="name" placeholder="Cattle name" required>
+        <input type="text" name="breed" placeholder="breed" required>
+        <label for="male">Male</label>
+        <input type="radio" name="gender" value="male" required>
+        <label for="Female">Female</label>
+        <input type="radio" name="gender" value="female" required>
+        <button type="submit">Submit</button>
+
+    </form>
+    <a href="/viewcattleInfo"><button>View Cattle Info</button></a>
+    
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Records</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Milk Records</h1>
+    <form id="searchForm">
+        <input type="text" id="animalName" placeholder="Enter animal name"  />
+        <input type="date" id="searchDate" placeholder="Search by date"  />
+
+        <button type="submit">Search</button>
+    </form>
+
+    <table id="resultsTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Session</th>
+                <th>Liters</th>
+            </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+    </table>
+
+    <p id="noRecords" style="display: none;">No records found.</p>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('animalName').value.trim();
+            const date = document.getElementById('searchDate').value;
+    
+            // Build the query string based on provided parameters
+            let query = '/viewmilkRecords?';
+            if (name) {
+                query += `name=${encodeURIComponent(name)}&`;
+            }
+            if (date) {
+                query += `date=${encodeURIComponent(date)}&`;
+            }
+            // Remove the trailing '&' if it exists
+            query = query.endsWith('&') ? query.slice(0, -1) : query;
+    
+            fetch(query)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsBody = document.getElementById('resultsBody');
+                    const resultsTable = document.getElementById('resultsTable');
+                    const noRecords = document.getElementById('noRecords');
+    
+                    resultsBody.innerHTML = ''; // Clear previous results
+                    if (data.length === 0) {
+                        resultsTable.style.display = 'none';
+                        noRecords.style.display = 'block'; // Show no records message
+                    } else {
+                        noRecords.style.display = 'none'; // Hide no records message
+                        resultsTable.style.display = 'table'; // Show the table
+                        
+                        data.forEach(record => {
+                            const row = document.createElement('tr');
+                            // const recordDate = record.date; // Extract the date
+                            const recordDate = new Date(record.date).toLocaleDateString();
+                            row.innerHTML = `
+                                <td>${record.name}</td>
+                                <td>${recordDate}</td>
+                                <td>${record.session}</td>
+                                <td>${record.liters}</td>
+                            `;
+                            resultsBody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+    
+</body>
+</html>

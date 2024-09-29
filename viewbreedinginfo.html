@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cattle Breeding</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cattle Breeding Records</h1>
+
+    <table id="breeding-table">
+        <thead>
+            <tr>
+                <th>Cow Name</th>
+                <th>Bull ID</th>
+                <th>Breeding Date</th>
+                <th>Expectancy Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This section can be dynamically populated using JavaScript -->
+        </tbody>
+    </table>
+
+    <button onclick="window.location.href='/breeding'">Add Breeding Record</button>
+
+    <script>
+        // You can fetch data from the backend and populate the table dynamically using JavaScript
+        
+        fetch('/viewbreeding')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#breeding-table tbody');
+                data.forEach(record => {
+                    const row = document.createElement('tr');
+                     const breedingDate = record.breeding_date.split('T')[0]; // Extracting the date part
+                     const expectancyDate = record.expectancy_date.split('T')[0]; // Extracting the date part
+           
+            
+                    row.innerHTML = `
+                        <td>${record.cowname}</td>
+                        <td>${record.bull_id}</td>
+                        <td>${breedingDate}</td>
+                        <td>${expectancyDate}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            });
+    
+    </script>
+</body>
+</html>

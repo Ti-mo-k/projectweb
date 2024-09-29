@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>milk records</title>
+    <Style>
+        body{
+            background-color: greenyellow;
+        }
+        form{
+            text-align: center;
+            margin-left: 150px;
+            background-color:beige;
+            width:450px;
+            border-radius: 30px;
+        }
+        #heading{
+            text-align: center;
+        }
+        #submit-1{
+            justify-content: center;
+            background-color: green;
+        }
+    </Style>
+</head>
+<body>
+    <form id="milkrecords" action="/milkRecords" method="post">
+        <h2 id="heading">Fill in the details</h2>
+        <input type="text" name="name" placeholder="Cow's name" required>
+        <input type="datetime-local" name="dateTime" placeholder="date" required>
+        <div>
+            <h5>Morning</h5>
+            <input type="checkbox" name="session" value="Morning">
+            <input type="number" name="morningLiters" placeholder="liters" min="0">
+        </div>
+        <div>
+            <h5>Afternoon</h5>
+            <input type="checkbox" name="session" value="Afternoon">
+            <input type="number" name="afternoonLiters" placeholder="liters" min="0">
+        </div>
+        <div>
+            <h5>Evening</h5>
+            <input type="checkbox" name="session" value="Evening">
+            <input type="number" name="eveningLiters" placeholder="liters" min="0">
+        </div>
+        <br>
+        <button id="submit-1" type="submit">Submit</button>
+    </form>
+
+     <a href="/milkrecordtable"><button type="submit">View milk records</button></a>
+    <script>
+        document.getElementById('milkrecords').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+    
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                dateTime: formData.get('dateTime'),
+                session: formData.getAll('session'),
+                morningLiters: formData.get('morningLiters'),
+                afternoonLiters: formData.get('afternoonLiters'),
+                eveningLiters: formData.get('eveningLiters')
+            };
+    
+            fetch('/milkRecords', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                // Optionally reset the form
+                document.getElementById('milkrecords').reset();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    
+</body>
+</html>

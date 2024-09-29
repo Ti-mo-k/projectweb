@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cattle Health Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, select, textarea {
+            margin: 5px;
+            padding: 10px;
+            width: calc(100% - 22px);
+        }
+        button {
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Cattle Health Records</h1>
+
+<form id="healthRecordForm" action="/add-record" method="post">
+    <input type="text" id="name" name="name" placeholder="Name" required>
+    <input type="text" id="breed" name="breed" placeholder="Breed" required>
+    <input type="number" id="age" name="age" placeholder="Age" required>
+    <input type="date" id="lastCheck" name="date" required>
+    <textarea id="notes" placeholder="Notes" name="notes" required></textarea>
+    <button type="submit">Add Record</button>
+</form>
+
+<button onclick="location.href='/viewhealth'">View Cattle Records</button>
+
+<!-- <script>
+    const form = document.getElementById('healthRecordForm');
+
+form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    // Create FormData object
+    const formData = new FormData(form);
+
+    const name = formdata.get('name')
+    const breed = formdata.get('breed')
+    const age= formdata.get('age')
+    const date= formdata.get('lastChecked')
+    const notes= formdata.get('notes')
+
+    
+
+    const response = await fetch('/add-record', {
+        method: 'POST',
+        body: formData
+    });
+
+    if (response.ok) {
+        alert('Record added successfully!');
+        form.reset(); // Clear the form fields
+    } else {
+        const errorText = await response.text(); // Get the error message from the response
+        alert(`Failed to add record: ${errorText}`);
+    }
+});
+
+</script>  -->
+
+</body>
+</html>

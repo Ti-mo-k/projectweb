@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeding and calving</title>
+    <link rel="stylesheet" href="breeding.css">
+</head>
+<body>
+    <header>
+        <h1>Cattle Breeding and Calving Management</h1>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="calving.html">Calving</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Breeding Records</h2>
+            <form id="breedingForm" action="/breeding" method="POST">
+                <label for="cowname">Cow name:</label>
+                <input type="text" id="cowId" name="cowname" required>
+
+                <label for="bullId">Bull ID:</label>
+                <input type="text" id="bullId" name="bull_id" required>
+
+                <label for="breedingDate">Breeding Date:</label>
+                <input type="date" id="breedingDate" name="breeding_date" required>
+                <br>
+                <br>
+                <label for="expectedDate">Expectancy Date:</label>
+                <input type="date" id="expectedDate" name="expectancy_date" required>
+
+                <button type="submit">Add Breeding Record</button>
+            </form>
+        </section>
+
+        <a href="/breedingview"><button type="submit" id="viewbreedinginfo">View breeding info</button></a>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Cattle Management System</p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    
+</body>
+</html>

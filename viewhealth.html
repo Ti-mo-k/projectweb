@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Cattle Health Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Search Cattle Health Records</h1>
+<input type="text" id="searchName" placeholder="Enter Cow Name" required>
+<button id="searchButton">Search</button>
+
+<div id="results"></div>
+
+<script>
+    document.getElementById('searchButton').addEventListener('click', async function() {
+        const name = document.getElementById('searchName').value;
+        const response = await fetch(`/search-records?name=${encodeURIComponent(name)}`);
+        const result = await response.json();
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        if (result.length > 0) {
+            // Create a table for results
+            let tableHTML = `
+                <h2>Records Found:</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Breed</th>
+                            <th>Age</th>
+                            <th>Last Health Check</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            result.forEach(record => {
+                const formattedDate =  new Date(record.date).toLocaleDateString();
+                tableHTML += `
+                    <tr>
+                        <td>${record.name}</td>
+                        <td>${record.breed}</td>
+                        <td>${record.age}</td>
+                        <td>${formattedDate}</td>
+                        <td>${record.notes}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            resultsDiv.innerHTML = tableHTML;
+        } else {
+            resultsDiv.innerHTML = '<p>No records found.</p>';
+        }
+    });
+</script>
+
+</body>
+</html>

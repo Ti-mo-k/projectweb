@@ -229,9 +229,7 @@ app.post('/login', async (req, res) => {
     });
 });
 
-app.post('/home',checkAuth, (req,res) =>{
-    
-})
+
 app.post('/cattleInfo',checkAuth, (req,res) => {
     const {name,breed,gender} =req.body;
     const user_id = req.session.user.id;
